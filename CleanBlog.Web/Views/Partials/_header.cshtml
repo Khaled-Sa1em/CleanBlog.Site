@@ -1,0 +1,28 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    var title = Model.HasValue("title") ? Model.Value("title") : Model.Name;
+    var mainImage = Model.Value<IPublishedContent>("mainImage", fallback: Fallback.ToAncestors);
+
+    var mainImageUrl = mainImage?.Url();
+    if (string.IsNullOrWhiteSpace(mainImageUrl))
+    {
+        mainImageUrl = "/assets/img/about-bg.jpg";
+    }
+}
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('@mainImageUrl')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>@title</h1>
+                    @if (Model.HasValue("subtitle"))
+                    {
+                        <span class="subheading">@Model.Value("subtitle")</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
