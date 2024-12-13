@@ -1,3 +1,26 @@
 ﻿@{
-	Layout = "_layout.cshtml";
+    Layout = "_layout.cshtml";
 }
+<div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+        <form action="/search/" method="GET" id="search">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="form-group controls">
+                        <input type="text" class="form-control col-xs-8" placeholder="Search for something..." name="q" value="">
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-10 mx-auto my-2">
+                    <div class="form-group  text-end ">
+                        <button class="btn btn-sm btn-primary search-button">
+                            Search <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <p>There are no search results</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

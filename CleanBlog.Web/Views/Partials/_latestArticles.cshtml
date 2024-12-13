@@ -1,21 +1,88 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using CleanBlog.Core.Helpers
+@{
+
+    var articleList = Model.Root().Descendant<ArticleList>();
+    var articles = articleList.Descendants<Article>()
+        .Where(x => x.IsVisible())
+        .OrderByDescending(x => x.PublishDate);
+    //var articles = Model.Root().Descendants()
+    //.Where(x => x.ContentType.Alias == "Article" && x.IsVisible())
+    //.OrderByDescending(x => (DateTime)x.Value("PublishDate"));
+
+    var isBlogPage = articleList.Id == Model.Id;
+    var pageNumber = 1;
+    var pageSize = isBlogPage ? 10 : 3;
+
+    if (isBlogPage)
+    {
+        pageNumber = QueryStringHelpers.GetIntFromQueryString(Request, "page", 1);
+        pageSize = QueryStringHelpers.GetIntFromQueryString(Request, "size", 10);
+    }
+    else
+    {
+        pageNumber = 1;
+        pageSize = 3;
+    }
+
+    var pageArticles = articles.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+    var totalCount = articles.Count();
+    var pageCount = totalCount > 0 ? Math.Ceiling((double)totalCount / pageSize) : 1;
+}
+
 <div class="row gx-4 gx-lg-5 justify-content-center">
     <div class="col-md-10 col-lg-8 col-xl-7">
         <!-- Post preview-->
-        <div class="post-preview">
-            <a href="post.html">
-                <h2 class="post-title">Man must explore, and this is exploration at its greatest</h2>
-                <h3 class="post-subtitle">Problems look mighty small from 150 miles up</h3>
-            </a>
-            <p class="post-meta">
-                Posted by
-                <a href="#!">Start Bootstrap</a>
-                on September 24, 2023
-            </p>
-        </div>
-        <!-- Divider-->
-        <hr class="my-4" />
-        <!-- Pager-->
-        <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+        @if (articles != null && articles.Any())
+        {
+            foreach (Article article in pageArticles)
+            {
+                <div class="post-preview">
+                    <a href="@article.Url()">
+                        <h2 class="post-title">@(!string.IsNullOrWhiteSpace(article.Title)?  article.Title: article.Name)</h2>
+                        @if (article.HasValue("subtitle"))
+                        {
+                            <h3 class="post-subtitle">@article.Subtitle</h3>
+                        }
+                    </a>
+                    <p class="post-meta">
+                        Posted by
+                        <a href="#!">@article.AuthorName</a>
+                        on @article.PublishDate.ToString("MMMM dd, yyyy")
+                    </p>
+                </div>
+                <!-- Divider-->
+                <hr class="my-4" />
+            }
+            <!-- Pager-->
+            if (isBlogPage)
+            {
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        @if (pageNumber > 1)
+                        {
+                            <li class="page-item"><a class="page-link" href="@articleList.Url()?page=@(pageNumber-1)&size=@pageSize">Prev</a></li>
+                        }
+                        <li class="page-item">
+                            <a class="page-link" click="return;">
+                                @pageNumber  Page of  @pageCount
+                            </a>
+                        </li>
+                        @if (pageNumber < pageCount)
+                        {
+                            <li class="page-item"><a class="page-link" href="@articleList.Url()?page=@(pageNumber+1)&size=@pageSize">Next</a></li>
+                        }
+                    </ul>
+                </nav>
+            }
+            else
+            {
+                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="@articleList.Url()">View All →</a></div>
+            }
+        }
+        else
+        {
+            <p>No Articles</p>
+        }
     </div>
 </div>

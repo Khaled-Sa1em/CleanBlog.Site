@@ -298,10 +298,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\TEMP\ClientDependency\KHALED-d2454bd92de89000c67f504c6470b6b2-map.xml" />
-    <Content Include="App_Data\TEMP\DistCache\LMW3SVC2ROOT-lastsynced.txt" />
-    <Content Include="bin\CleanBlog.Web.dll" />
-    <Content Include="bin\CleanBlog.Web.pdb" />
     <Content Include="config\BackOfficeTours\getting-started.json" />
     <Content Include="config\ClientDependency.config" />
     <Content Include="config\grid.editors.config.js" />
@@ -347,26 +343,35 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Include="App_Data\Models\Article.generated.cs" />
+    <Compile Include="App_Data\Models\ArticleControls.generated.cs" />
+    <Compile Include="App_Data\Models\ArticleList.generated.cs" />
+    <Compile Include="App_Data\Models\Contact.generated.cs" />
+    <Compile Include="App_Data\Models\ContactFormControls.generated.cs" />
+    <Compile Include="App_Data\Models\Content.generated.cs" />
+    <Compile Include="App_Data\Models\ContentControls.generated.cs" />
+    <Compile Include="App_Data\Models\Error.generated.cs" />
+    <Compile Include="App_Data\Models\File.generated.cs" />
+    <Compile Include="App_Data\Models\Folder.generated.cs" />
+    <Compile Include="App_Data\Models\FooterControls.generated.cs" />
+    <Compile Include="App_Data\Models\HeaderControls.generated.cs" />
+    <Compile Include="App_Data\Models\Home.generated.cs" />
+    <Compile Include="App_Data\Models\IconLinkItem.generated.cs" />
+    <Compile Include="App_Data\Models\Image.generated.cs" />
+    <Compile Include="App_Data\Models\MainImageControls.generated.cs" />
+    <Compile Include="App_Data\Models\Member.generated.cs" />
+    <Compile Include="App_Data\Models\Search.generated.cs" />
+    <Compile Include="App_Data\Models\SeoControls.generated.cs" />
+    <Compile Include="App_Data\Models\UmbracoMediaArticle.generated.cs" />
+    <Compile Include="App_Data\Models\UmbracoMediaAudio.generated.cs" />
+    <Compile Include="App_Data\Models\UmbracoMediaVectorGraphics.generated.cs" />
+    <Compile Include="App_Data\Models\UmbracoMediaVideo.generated.cs" />
+    <Compile Include="App_Data\Models\VisibilityControls.generated.cs" />
+    <Compile Include="App_Data\Models\XmlSitemap.generated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Media\Web.config" />
-    <Content Include="App_Data\TEMP\ClientDependency\1_3dc0a391823648dea48ddb7db3b68e80.cdJ" />
-    <Content Include="App_Data\TEMP\ClientDependency\1_96220053cc554da3870799a70fd171b8.cdC" />
-    <Content Include="App_Data\TEMP\ClientDependency\1_c2ad9ea9c789458cb7f8ea4c6a1af81c.cdJ" />
-    <Content Include="App_Data\TEMP\ExamineIndexes\External\segments.gen" />
-    <Content Include="App_Data\TEMP\ExamineIndexes\External\segments_1" />
-    <Content Include="App_Data\TEMP\ExamineIndexes\Internal\segments.gen" />
-    <Content Include="App_Data\TEMP\ExamineIndexes\Internal\segments_1" />
-    <Content Include="App_Data\TEMP\ExamineIndexes\Members\segments.gen" />
-    <Content Include="App_Data\TEMP\ExamineIndexes\Members\segments_1" />
-    <Content Include="App_Data\TEMP\NuCache\NuCache.Content.db" />
-    <Content Include="App_Data\TEMP\NuCache\NuCache.Content.tlog" />
-    <Content Include="App_Data\TEMP\NuCache\NuCache.Media.db" />
-    <Content Include="App_Data\TEMP\NuCache\NuCache.Media.tlog" />
-    <Content Include="App_Data\TEMP\TypesCache\umbraco-types.KHALED.hash" />
-    <Content Include="App_Data\TEMP\TypesCache\umbraco-types.KHALED.list" />
     <None Include="packages.config" />
     <Content Include="Views\Article.cshtml" />
     <Content Include="Views\ArticleList.cshtml" />
@@ -380,6 +385,8 @@
     <Content Include="Views\Partials\_navigation.cshtml" />
     <Content Include="Views\Search.cshtml" />
     <Content Include="Views\_layout.cshtml" />
+    <Content Include="Views\Partials\_latestArticles.cshtml" />
+    <Content Include="Views\XmlSitemap.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -389,6 +396,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\MacroPartials\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CleanBlog.Core\CleanBlog.Core.csproj">
+      <Project>{a9e83e90-854a-4f9a-bcbd-f9cfce983f66}</Project>
+      <Name>CleanBlog.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

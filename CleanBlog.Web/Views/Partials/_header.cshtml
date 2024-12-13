@@ -9,19 +9,43 @@
     {
         mainImageUrl = "/assets/img/about-bg.jpg";
     }
+
+    mainImageUrl.GetCropUrl(1903, 532);
+
+    var authorName = Model.HasProperty("authorName") && Model.HasValue("authorName") ? Model.Value("authorName") : null;
+    var publishDate = Model.HasProperty("publishDate") && Model.HasValue("publishDate") ? Model.Value("publishDate") : DateTime.MinValue;
+
 }
 <!-- Page Header-->
 <header class="masthead" style="background-image: url('@mainImageUrl')">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                <div class="site-heading">
-                    <h1>@title</h1>
-                    @if (Model.HasValue("subtitle"))
-                    {
-                        <span class="subheading">@Model.Value("subtitle")</span>
-                    }
-                </div>
+                @if (authorName == null)
+                {
+                    <div class="site-heading">
+                        <h1>@title</h1>
+                        @if (Model.HasValue("subtitle"))
+                        {
+                            <span class="subheading">@Model.Value("subtitle")</span>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="post-heading">
+                        <h1>@title</h1>
+                        @if (Model.HasValue("subtitle"))
+                        {
+                            <h2 class="subheading">@Model.Value("subtitle")</h2>
+                        }
+                        <span class="meta">
+                            Posted by
+                            <a href="#!">@authorName</a>
+                            on @(((DateTime)publishDate).ToString("MMMM dd, yyyy"))
+                        </span>
+                    </div>
+                }
             </div>
         </div>
     </div>
