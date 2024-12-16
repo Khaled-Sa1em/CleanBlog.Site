@@ -21,7 +21,7 @@ namespace Umbraco.Web.PublishedModels
 {
 	/// <summary>Contact</summary>
 	[PublishedModel("contact")]
-	public partial class Contact : PublishedContentModel, IContactFormControls, IVisibilityControls
+	public partial class Contact : PublishedContentModel, IContactFormControls, IHeaderControls, IMainImageControls, IVisibilityControls
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -57,6 +57,27 @@ namespace Umbraco.Web.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.15")]
 		[ImplementPropertyType("successMessage")]
 		public virtual global::System.Web.IHtmlString SuccessMessage => global::Umbraco.Web.PublishedModels.ContactFormControls.GetSuccessMessage(this);
+
+		///<summary>
+		/// Subtitle: Add Subtitle for this page
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.15")]
+		[ImplementPropertyType("subtitle")]
+		public virtual string Subtitle => global::Umbraco.Web.PublishedModels.HeaderControls.GetSubtitle(this);
+
+		///<summary>
+		/// Title: Add Title for this page
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.15")]
+		[ImplementPropertyType("title")]
+		public virtual string Title => global::Umbraco.Web.PublishedModels.HeaderControls.GetTitle(this);
+
+		///<summary>
+		/// Main Image
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.18.15")]
+		[ImplementPropertyType("mainImage")]
+		public virtual global::Umbraco.Core.Models.MediaWithCrops MainImage => global::Umbraco.Web.PublishedModels.MainImageControls.GetMainImage(this);
 
 		///<summary>
 		/// Hide From XML Sitemap

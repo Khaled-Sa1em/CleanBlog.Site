@@ -1,0 +1,41 @@
+﻿@using CleanBlog.Core.Controllers
+
+@using CleanBlog.Core.ViewModels
+
+@inherits UmbracoViewPage<ContactVM>
+
+
+<div id="form-outer">
+    @using (Ajax.BeginForm("SubmitForm", "ContactSurface", new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,//replace the contact of this form div
+        UpdateTargetId = "form-result",
+        OnSuccess = "contactForm.showResult",
+        OnFailure = "contactForm.showResult",
+    }, new { id = "contact-form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.ContactFormId) @*to store form id, it will presiste it for us *@
+        <div class="form-floating">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter your name...", dataSbValidations = "required" })
+            @Html.LabelFor(m => m.Name)
+            @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-floating">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Enter your email..." })
+            @Html.LabelFor(m => m.Email)
+            @Html.ValidationMessageFor(m => m.Email, null, new { @class = "text-danger" })
+        </div>
+
+        <div class="form-floating">
+            @Html.TextAreaFor(m => m.Message, new { @class = "form-control", placeholder = "Enter your message here...", @rows = 10 })
+            @Html.LabelFor(m => m.Message)
+            @Html.ValidationMessageFor(m => m.Message, null, new { @class = "text-danger" })
+        </div>
+        <br />
+        <!-- Submit Button-->
+        <button class="btn btn-primary text-uppercase contact-submit" id="submitButton" type="submit">Send</button>
+    }
+</div>
+<div id="form-result"></div>
