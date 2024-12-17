@@ -27,7 +27,8 @@
                         var results = Umbraco.ContentQuery.Search(searchQuery, string.Empty);
                         long resultCount = results != null && results.Any() ? results.Count() : 0;
 
-                        <p>Your search for <strong>@searchQuery</strong> returned <strong>@resultCount</strong> result@(resultCount==1?null:"s")</p>
+                        @*<p>Your search for <strong>@searchQuery</strong> returned <strong>@resultCount</strong> result@(resultCount==1?null:"s")</p>*@
+                        @Html.Raw(string.Format(Umbraco.GetDictionaryValue("Search.ResultText"), searchQuery, resultCount, (resultCount == 1 ? null : "s")))
                         if (resultCount > 0)
                         {
                             foreach (var result in results)

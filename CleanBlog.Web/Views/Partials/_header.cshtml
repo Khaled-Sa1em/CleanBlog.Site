@@ -4,20 +4,23 @@
     var title = Model.HasValue("title") ? Model.Value("title") : Model.Name;
     var mainImage = Model.Value<IPublishedContent>("mainImage", fallback: Fallback.ToAncestors);
 
-    var mainImageUrl = mainImage?.Url();
-    if (string.IsNullOrWhiteSpace(mainImageUrl))
-    {
-        mainImageUrl = "/assets/img/about-bg.jpg";
-    }
+    //var mainImageUrl = mainImage?.Url();
+    //if (string.IsNullOrWhiteSpace(mainImageUrl))
+    //{
+    //    mainImageUrl = "/assets/img/about-bg.jpg";
+    //}
 
-    mainImageUrl.GetCropUrl(1903, 532);
+    //mainImageUrl.GetCropUrl(1903, 532);
+
+    var mainSmallImageUrl = mainImage.GetCropUrl("PageHeader.Tiny");
+    var mainImageUrl = mainImage.GetCropUrl("PageHeader.Large");
 
     var authorName = Model.HasProperty("authorName") && Model.HasValue("authorName") ? Model.Value("authorName") : null;
     var publishDate = Model.HasProperty("publishDate") && Model.HasValue("publishDate") ? Model.Value("publishDate") : DateTime.MinValue;
-
 }
+
 <!-- Page Header-->
-<header class="masthead" style="background-image: url('@mainImageUrl')">
+<header class="masthead lazyload" data-bg="@(!string.IsNullOrWhiteSpace(mainImageUrl)? mainImageUrl : null)" style="background-image: url('@mainSmallImageUrl')">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
