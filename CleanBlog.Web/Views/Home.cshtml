@@ -1,6 +1,9 @@
-﻿@{
+﻿@inherits  UmbracoViewPage
+
+@{
     Layout = "_layout.cshtml";
 }
 
 <!-- Main Content-->
-@Html.Partial("_latestArticles")
+@*@Html.Partial("_latestArticles")*@
+@Html.CachedPartial("_latestArticles", Model, 3600, true)

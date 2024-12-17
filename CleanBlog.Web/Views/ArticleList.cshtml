@@ -1,6 +1,16 @@
-﻿@{
-	Layout = "_layout.cshtml";
+﻿@inherits UmbracoViewPage
+
+@{
+    Layout = "_layout.cshtml";
+    Func<object, ViewDataDictionary, string> contextualKeyBuilder = (model, viewData) =>
+    {
+        var cachKey = "latestArticles_" + Request.QueryString.ToString();
+        return cachKey; // Use your own logic to build the key
+    };
 }
 
 
-@Html.Partial("_latestArticles")
+
+
+@*@Html.Partial("_latestArticles")*@
+@Html.CachedPartial("_latestArticles", Model, 3600, true, false, null, contextualKeyBuilder);

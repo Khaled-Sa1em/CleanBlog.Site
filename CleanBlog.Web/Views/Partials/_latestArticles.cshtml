@@ -1,44 +1,21 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
-@using CleanBlog.Core.Helpers
+﻿@*@inherits Umbraco.Web.Mvc.UmbracoViewPage*@
+@inherits CleanBlogViewPage
+
+@using CleanBlog.Core.ViewPages
 @{
-
-    var articleList = Model.Root().Descendant<ArticleList>();
-    var articles = articleList.Descendants<Article>()
-        .Where(x => x.IsVisible())
-        .OrderByDescending(x => x.PublishDate);
-    //var articles = Model.Root().Descendants()
-    //.Where(x => x.ContentType.Alias == "Article" && x.IsVisible())
-    //.OrderByDescending(x => (DateTime)x.Value("PublishDate"));
-
-    var isBlogPage = articleList.Id == Model.Id;
-    var pageNumber = 1;
-    var pageSize = isBlogPage ? 10 : 3;
-
-    if (isBlogPage)
-    {
-        pageNumber = QueryStringHelpers.GetIntFromQueryString(Request, "page", 1);
-        pageSize = QueryStringHelpers.GetIntFromQueryString(Request, "size", 10);
-    }
-    else
-    {
-        pageNumber = 1;
-        pageSize = 3;
-    }
-
-    var pageArticles = articles.Skip((pageNumber - 1) * pageSize).Take(pageSize);
-    var totalCount = articles.Count();
-    var pageCount = totalCount > 0 ? Math.Ceiling((double)totalCount / pageSize) : 1;
+    var resultSet = ArticleService.GetLatestArticles(Model, Request);
 }
 
 <div class="row gx-4 gx-lg-5 justify-content-center">
     <div class="col-md-10 col-lg-8 col-xl-7">
         <!-- Post preview-->
-        @if (articles != null && articles.Any())
+        @if (resultSet != null && resultSet.Results != null && resultSet.Results.Any())
         {
-            foreach (Article article in pageArticles)
+            foreach (Article article in resultSet.Results)
             {
                 <div class="post-preview">
                     <a href="@article.Url()">
+                        @DateTime.Now
                         <h2 class="post-title">@(!string.IsNullOrWhiteSpace(article.Title)?  article.Title: article.Name)</h2>
                         @if (article.HasValue("subtitle"))
                         {
@@ -55,29 +32,29 @@
                 <hr class="my-4" />
             }
             <!-- Pager-->
-            if (isBlogPage)
+            if (resultSet.IsArticleListPage)
             {
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
-                        @if (pageNumber > 1)
+                        @if (resultSet.PageNumber > 1)
                         {
-                            <li class="page-item"><a class="page-link" href="@articleList.Url()?page=@(pageNumber-1)&size=@pageSize">Prev</a></li>
+                            <li class="page-item"><a class="page-link" href="@resultSet.Url?page=@(resultSet.PageNumber-1)&size=@resultSet.PageSize">Prev</a></li>
                         }
                         <li class="page-item">
                             <a class="page-link" click="return;">
-                                @pageNumber  Page of  @pageCount
+                                @resultSet.PageNumber  Page of  @resultSet.PageCount
                             </a>
                         </li>
-                        @if (pageNumber < pageCount)
+                        @if (resultSet.PageNumber < resultSet.PageCount)
                         {
-                            <li class="page-item"><a class="page-link" href="@articleList.Url()?page=@(pageNumber+1)&size=@pageSize">Next</a></li>
+                            <li class="page-item"><a class="page-link" href="@resultSet.Url?page=@(resultSet.PageNumber+1)&size=@resultSet.PageSize">Next</a></li>
                         }
                     </ul>
                 </nav>
             }
             else
             {
-                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="@articleList.Url()">View All →</a></div>
+                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="@resultSet.Url">View All →</a></div>
             }
         }
         else

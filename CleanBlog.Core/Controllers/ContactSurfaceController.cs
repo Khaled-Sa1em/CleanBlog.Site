@@ -1,12 +1,7 @@
 ﻿using CleanBlog.Core.Services;
 using CleanBlog.Core.ViewModels;
-using System;
-using System.Net.Mail;
 using System.Web;
-using System.Web.Configuration;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using Umbraco.Core.Logging;
 using Umbraco.Web;
 using Umbraco.Web.Mvc;
 

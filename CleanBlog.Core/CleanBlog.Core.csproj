@@ -280,9 +280,13 @@
     <Compile Include="Extensions\HTMLHelperExtensions.cs" />
     <Compile Include="Helpers\QueryStringHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ArticleService.cs" />
+    <Compile Include="Services\IArticleService.cs" />
     <Compile Include="Services\ISmtpServices.cs" />
     <Compile Include="Services\SmtpService.cs" />
+    <Compile Include="ViewModels\ArticleResultSet.cs" />
     <Compile Include="ViewModels\ContactVM.cs" />
+    <Compile Include="ViewPages\CleanBlogViewPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -9,6 +9,7 @@ namespace CleanBlog.Core.Composing
         public void Compose(Composition composition)
         {
             composition.Register<ISmtpServices, SmtpService>(Lifetime.Transient);
+            composition.Register<IArticleService, ArticleService>(Lifetime.Request);
         }
     }
 }
